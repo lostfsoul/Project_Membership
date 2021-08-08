@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AssociationBasmaModelStoreContainer" CdmEntityContainer="DBBasma">
+    <EntitySetMapping Name="Categoties">
+      <EntityTypeMapping TypeName="AssociationBasmaModel.Categotie">
+        <MappingFragment StoreEntitySet="Categotie">
+          <ScalarProperty Name="id_categorie" ColumnName="id_categorie" />
+          <ScalarProperty Name="nom_categorie" ColumnName="nom_categorie" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="logins">
+      <EntityTypeMapping TypeName="AssociationBasmaModel.login">
+        <MappingFragment StoreEntitySet="login">
+          <ScalarProperty Name="nom_user" ColumnName="nom_user" />
+          <ScalarProperty Name="motdepass" ColumnName="motdepass" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Membres">
+      <EntityTypeMapping TypeName="AssociationBasmaModel.Membre">
+        <MappingFragment StoreEntitySet="Membre">
+          <ScalarProperty Name="categorie" ColumnName="categorie" />
+          <ScalarProperty Name="id_membre" ColumnName="id_membre" />
+          <ScalarProperty Name="nom_membre" ColumnName="nom_membre" />
+          <ScalarProperty Name="prenom_membre" ColumnName="prenom_membre" />
+          <ScalarProperty Name="adresse_membre" ColumnName="adresse_membre" />
+          <ScalarProperty Name="telephone_membre" ColumnName="telephone_membre" />
+          <ScalarProperty Name="id_categorie" ColumnName="id_categorie" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="AssociationBasmaModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="AssociationBasmaModel.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="AssociationBasmaModel.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="AssociationBasmaModel.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="AssociationBasmaModel.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="AssociationBasmaModel.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="AssociationBasmaModel.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="AssociationBasmaModel.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="AssociationBasmaModel.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="AssociationBasmaModel.Store.sp_upgraddiagrams" />
+  </EntityContainerMapping>
+</Mapping>

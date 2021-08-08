@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AssociationBasmaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Categotie">
+    <Key>
+      <PropertyRef Name="id_categorie" />
+    </Key>
+    <Property Name="id_categorie" Type="Int32" Nullable="false" />
+    <Property Name="nom_categorie" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Membres" Relationship="Self.FK_Membre_Categotie" FromRole="Categotie" ToRole="Membre" />
+  </EntityType>
+  <EntityType Name="login">
+    <Key>
+      <PropertyRef Name="nom_user" />
+    </Key>
+    <Property Name="nom_user" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="motdepass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Membre">
+    <Key>
+      <PropertyRef Name="id_membre" />
+    </Key>
+    <Property Name="id_membre" Type="Int32" Nullable="false" />
+    <Property Name="nom_membre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="prenom_membre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="adresse_membre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="telephone_membre" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="id_categorie" Type="Int32" />
+    <NavigationProperty Name="Categotie" Relationship="Self.FK_Membre_Categotie" FromRole="Membre" ToRole="Categotie" />
+    <Property Name="categorie" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_Membre_Categotie">
+    <End Role="Categotie" Type="Self.Categotie" Multiplicity="0..1" />
+    <End Role="Membre" Type="Self.Membre" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categotie">
+        <PropertyRef Name="id_categorie" />
+      </Principal>
+      <Dependent Role="Membre">
+        <PropertyRef Name="id_categorie" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DBBasma" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Categoties" EntityType="Self.Categotie" />
+    <EntitySet Name="logins" EntityType="Self.login" />
+    <EntitySet Name="Membres" EntityType="Self.Membre" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <AssociationSet Name="FK_Membre_Categotie" Association="Self.FK_Membre_Categotie">
+      <End Role="Categotie" EntitySet="Categoties" />
+      <End Role="Membre" EntitySet="Membres" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(AssociationBasmaModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(AssociationBasmaModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>
